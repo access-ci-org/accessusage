@@ -549,7 +549,7 @@ def setup_conf(config_filename):
     os.write(con_fd, str.encode("# In the \"Description\" enter:\n"))
     os.write(con_fd, str.encode("# \"Please install the following HASH for agent xdusage on resource <ACCESS INFO RESOURCEID>\"\n"))
     os.write(con_fd, str.encode("# <YOUR HASH>\n"))
-    os.write(con_fd, str.encode("# \"on server https://allocations-api.access-ci.org/acdb/\""\n))
+    os.write(con_fd, str.encode("# \"on server https://allocations-api.access-ci.org/acdb/\"\n"))
 
     os.write(con_fd, str.encode("api_key           = <YOUR_API_KEY>\n\n"))
     os.write(con_fd, str.encode("rest_url_base     = https://allocations-api.access-ci.org/\n\n"))
