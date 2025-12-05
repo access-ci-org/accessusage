@@ -26,7 +26,7 @@ Project: <project identifier>/<resource name> [""|status=inactive]
 PI: <name of PI>
 Allocation: <start date>/<end date>
  Total=<size of allocation> Remaining=<amount remaining> Usage=<how much has been used> Jobs=<number of jobs>
-   <name of querying user> portal=<xsede portal name for user> usage=<personal usage> jobs=<personal number of jobs>
+   <name of querying user> portal=<access-ci name for user> usage=<personal usage> jobs=<personal number of jobs>
 
 Notes:
 * status=inactive appears on the Project: line if the project is no longer active; 

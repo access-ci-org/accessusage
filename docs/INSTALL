@@ -4,85 +4,33 @@
 
 Instructions for installing accessusage from RPM (recommended) or from TAR.
 
+Choose either RPM or TAR install.
 
 **********************
 ** RPM Installation **
 **********************
 
-R1) Configure trust in the XSEDE-Production repository
-
-   a) Browse the following directory and copy the link to the package that matches your operating system:
-      https://software.xsede.org/production/repo/repos/
-
-   b) Install the package at the link you copied above:
-      rpm -i https://software.xsede.org/production/repo/repos/XSEDE-Production-config.<OPERATING SYSTEM>.noarch.rpm
-
-   You may see a warning like this:
-      warning: XSEDE-Production-config.centos-5-1.noarch.rpm: Header V3 DSA signature: NOKEY, key ID 20423dbb
-
-   This is a signature trust bootstrapping issue because until you complete this entire procedure, RPM doesn't trust the signer of this RPM.
-
-   c) Lastly, configure RPM to trust XSEDE's signature (PGP key) installed in the previous step:
-      rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-XSEDE-Production
-
-   SECURITY NOTE:
-   If you need greater security assurance modify the above procedure as follows:
-   a') Browse the package directory using https and review the server's HTTPS/TLS host certificate
-   b') Download the package over https using your favorite secure download tool
-   c') Verify the RPM before you install it using "rpm -Kv <package>"
-
-   DEVELOPMENT REPO NOTE: If you are installing XSEDE-Development repository packages, follow this procedure:
-      https://software.xsede.org/development/repo/repoconfig.txt
-
-R2) Install accessusage
+R1) Install the desired RPM release from [https://github.com/access-ci-org/accessusage/releases](https://github.com/access-ci-org/accessusage/releases).
 
    NOTE: This package automatically creates an "accessusage" account that owns the files and will
          execute accessusage via sudo.
 
-   Install via rpm/yum these pre-requisites:
-   - sudo
-
-   To install to the default location “/usr/local/accessusage-%VER%-%REL%” use these commands:
-   # yum install accessusage
-
-   To install to a different location, say “/soft/accessusage-%VER%-%REL%”, use these commands:
-   # yum install yum-downloadonly
-   # yum update accessusage -y --downloadonly --downloaddir=./
+The RPM installs files by default under “/usr/local/accessusage-%VER%-%REL%”
+   # rpm -i ./accessusage-%VER%-%REL%-1.noarch.rpm
+To install under a different prefix, use
    # rpm -i --prefix=<INSTALL_DIR> ./accessusage-%VER%-%REL%-1.noarch.rpm
 
 
-R3) Edit /etc/sudoers to grant permission for everyone to run accessusage as the non_root user "accessusage" (created when the rpm was installed).
+R2) Edit /etc/sudoers to grant permission for everyone to run accessusage as the non_root user "accessusage" (created when the rpm was installed).
     This can be done by adding these lines (can copy specific lines from <INSTALL_DIR>/etc/accessusage.sudoers.example):
 
       Defaults!<INSTALL_DIR>/bin/accessusage env_keep="USER"
       Defaults!<INSTALL_DIR>/bin/accessusage runas_default=accessusage
       ALL ALL=(accessusage) NOPASSWD: <INSTALL_DIR>/bin/accessusage
 
-R4) Create the accessusage_v1.conf (legacy XDCDB database) and accessusage_v2.conf (new ACDB database) files.   
+R3) Create an accessusage_v2.conf (new ACDB database) file.   
 
-    MIGRATING FROM XDUSAGE: If you have an existing xdusage.conf file, you can copy it over to /etc/accessusage_v1.conf.  
-    The /etc/accessusage_v2.conf can then be created by 
-        a) copying the <INSTALL_DIR>/etc/accessusage_v2.conf.example to /etc/accessusage_v2.conf
-        b) Submit a ticket to explictly request your XDCDB key be copied to ACDB.  If you are installing this prior to 
-           September 1, 2022, please email help@xsede.org.  Otherwise go to https://access-ci.org and submit a ticket via their 
-           form.  Suggested ticket content below: 
-
-           Subject: ACDB API-KEY copy request
-   
-           Please copy the XDCDB agent xdusage key hash for resource <RESOURCE NAME> to 
-           https://allocations-api.access-ci.org/acdb/.
-
-        c) Copy your api_id, api_key, and resource values from /etc/accessusage_v1.conf to /etc/accessusage_v2.conf
-        d) Verify root ownership and 'accessusage' group permissions on both /etc/accessusage_v1.conf to /etc/accessusage_v2.conf.
-           Permissions on both files should be 640.  E.g.,
-
-           # ls -l /etc/accessusage*conf
-           -rw-r-----. 1 root accessusage 849 Aug 15 19:47 /etc/accessusage_v1.conf
-           -rw-r-----. 1 root accessusage 967 Aug 15 19:48 /etc/accessusage_v2.conf
-
- 
-    
-    OTHERWISE: The following steps will need to be generate the /etc/accessusage_v2.conf file 
+    The following steps will need to be generate the /etc/accessusage_v2.conf file 
  
         a) Run the accessusage script as root and it will create an initial configuration file for you at 
            /etc/accessusage_v2.conf.  The script will set the ownership to root:accessusage and the file permissions to 640.
@@ -106,7 +54,7 @@ R4) Create the accessusage_v1.conf (legacy XDCDB database) and accessusage_v2.co
            accessusage to map usernames to people in the ACDB. The api_id (along with the api_key) are used to authenticate 
            accessusage to the API. Both of these values should be the same and must match the XDCDB Resource Name as listed at:
             
-           https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html;sort=ResourceID
+           https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid
     
            An example accessusage_v2.conf file with the information needed by the API:
              resource_name     = ranger.tacc.teragrid
@@ -115,12 +63,12 @@ R4) Create the accessusage_v1.conf (legacy XDCDB database) and accessusage_v2.co
              api_key           = abcdgzCvPliUd2Hxa2k6Z3KCQzbgs8uSzjQpn2O4+62mEO9aEDTYJqcRhktODxyz
              admin_name        = mshapiro
 
-R5) Install an accessusage modules file to make it easier for users to access it. Copy the sample file in
+R4) Install an accessusage modules file to make it easier for users to access it. Copy the sample file in
     <INSTALL_DIR>/etc/accessusage.modules.example to /usr/local/Modules/modulefiles/accessusage/%VER%-%REL%
     (or a Module directory of your choosing) and mark the default by specifying %VER%-%REL% in the
     associated /usr/local/Modules/modulefiles/accessusage/.version file.
 
-R6) Change to <INSTALL_DIR> and run:
+R5) Change to <INSTALL_DIR> and run:
 
     # ./bin/accessusage
 
@@ -152,9 +100,7 @@ Prerequisites: sudo and Python3
 
 Installation steps:
 
-T1) Download the latest accessusage package and signature from:
-    https://software.xsede.org/production/accessusage/latest/
-    Verify the downloaded package against the signature
+T1) Download the desired TAR release from [https://github.com/access-ci-org/accessusage/releases](https://github.com/access-ci-org/accessusage/releases).
 
 T2) Untar the package:
     tar -xzvf accessusage-%VER%-%REL%.tgz
@@ -170,4 +116,4 @@ T4) Create a non-root user and dedicated group that does not map to an actual pe
       password disabled ('*' in the shadow file) 
       home=/
 
-T5) Follow steps R3) thru R6) above
+T5) Follow steps R2) thru R5) above

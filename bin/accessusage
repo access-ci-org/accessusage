@@ -18,7 +18,6 @@ class ArgumentParser(argparse.ArgumentParser):
 
 
 class Options:
-    apiversion = None
     projects = []
     resources = []
     usernames = []
@@ -126,9 +125,6 @@ def parse_args():
     args = aparse.parse_args()
     options = Options()
 
-    if args.apiversion:
-        options.apiversion = args.apiversion
-
     if args.projects:
         options.projects = args.projects
     else:
@@ -172,24 +168,12 @@ logname = util.check_and_run_sudo(__file__)
 
 install_dir = os.path.dirname(os.path.abspath(__file__))
 config = util.get_config(options, "accessusage_v2.conf", install_dir)
-if options.apiversion is None:
-    url = "{}/xdusage/v2/api/production".format(config["rest_url"])
-    util.is_authorized(options, config, __file__)
-    production = util.json_get(options, config, url)
-    if production and production["result"]:
-      options.apiversion = "2"
-    else:
-      options.apiversion = "1"
 
 if options.version:
-    print("accessusage version {}, api version {}".format('%VER%', options.apiversion))
+    print("accessusage version {}, api version 2".format('%VER%'))
     exit(1)
 
 try:
-    if options.apiversion == '1':
-        config = util.get_config(options, "accessusage_v1.conf", install_dir)
-        accessusage_v1.main(options, config, logname)
-    elif options.apiversion == '2':
-        accessusage_v2.main(options, config, logname)
+    accessusage_v2.main(options, config, logname)
 except KeyboardInterrupt:
     pass

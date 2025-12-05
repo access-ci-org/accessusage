@@ -9,9 +9,9 @@
 #
 
 
-# XDCDB ResourceName from https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html;sort=ResourceID
-resource_name     = <YOUR_XDCDB_RESOURCE_NAME>
-api_id            = <YOUR_XDCDB_RESOURCE_NAME>
+# ACDB ResourceName from https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid
+resource_name     = <YOUR_ACDB_RESOURCE_NAME>
+api_id            = <YOUR_ACDB_RESOURCE_NAME>
 api_key           = <YOUR_API_KEY>
 
 rest_url_base     = https://allocations-api.access-ci.org/acdb
