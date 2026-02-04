@@ -3,10 +3,7 @@ Workflow:
 # Create TARs and RPMs
 ./sbin/build-packages
 
-# Sign TARs and RPMs (optional--RPMs will be signed by xsedesig on upload)
+# Sign TARs and RPMs 
 ./sbin/sign-packages
 
-# Upload to development repository
-# uploads, signs, pushes rpm to all the repos, and updates all the repos
-./sbin/upload-packages
 

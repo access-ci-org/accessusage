@@ -14,7 +14,7 @@ is_root = None
 
 def check_resource(options, config, resources_func):
     local_resource = config["resource"]
-    # Check if the named resource is in the active XSEDE resource list.
+    # Check if the named resource is in the active ACCESS-CI CiDeR resource list.
     # construct a rest url and fetch it
     # don't forget to uri escape these things in case one has funny
     # characters
@@ -24,21 +24,19 @@ def check_resource(options, config, resources_func):
         if is_root:
             sys.stderr.write(
                 "The resource_name '{}' specified in the configuration file '{}'\n".format(local_resource, conf_file))
-            sys.stderr.write("is not listed as a current XSEDE system.\n")
+            sys.stderr.write("is not listed as a current ACCESS-CI system.\n")
             sys.stderr.write(
-                "Information may not exist in the XSEDE central accounting database for this resource.\n\n")
-            sys.stderr.write("Current XSEDE resources are listed at:\n")
-            sys.stderr.write("https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html;sort"
-                             "=ResourceID\n")
+                "Information may not exist in the ACCESS-CI central accounting database for this resource.\n\n")
+            sys.stderr.write("Current ACCESS-CI CiDeR resources are listed at:\n")
+            sys.stderr.write("https://opsapi1.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
         else:
             sys.stderr.write("The resource_name '{}' specified in the configuration file is not listed as a current "
-                             "XSEDE system.\n".format(local_resource))
-            sys.stderr.write("Information may not exist in the XSEDE central accounting database for this resource.\n")
+                             "ACCESS-CI system.\n".format(local_resource))
+            sys.stderr.write("Information may not exist in the ACCESS-CI central accounting database for this resource.\n")
             sys.stderr.write("Please contact your system administrator.\n\n")
             sys.stderr.write("You can specify a different resource with the \"-r\" option.\n\n")
-            sys.stderr.write("Current XSEDE resources are listed at:\n")
-            sys.stderr.write("https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html;sort"
-                             "=ResourceID\n")
+            sys.stderr.write("Current ACCESS-CI resources are listed at:\n")
+            sys.stderr.write("https://opsapi1.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
 
 
 
@@ -422,17 +420,22 @@ def is_authorized(options, config, command_line):
 
     if resp is None or resp.getcode() != 200:
         if is_root:
-            message = "This script needs to be authorized with the XDCDB-API. \nAn API-KEY already exists in the " \
+            message = "This script needs to be authorized with the ACCESS-CI Allocations API. \nAn API-KEY already exists in the " \
                       "configuration file ({}). \nIf you still have the HASH that was generated with this key \nyou " \
                       "can use it to register accessusage with the API. \nOtherwise, you will need to enter the new " \
                       "API_KEY into the configuration file. \nIn either case, send the following e-mail to " \
-                      "help@xsede.org to register with the hash and key. \nSubject: ACDB API-KEY installation " \
-                      "request \nPlease install the following HASH for agent xdusage on resource '{}'. \n<Replace " \
+    "Open an operations request ticket at: https://operations.access-ci.org/open-operations-request/.  You will have to login first.\n" \
+    " In the \"Request Title\" enter \"Allocations API-KEY installation request\"\n" \
+    " In the \"Description\" enter:\n" \
+    " \"Please install the following HASH for agent xdusage on resource <ACCESS INFO RESOURCEID>\"\n" \
+    " <YOUR HASH>\n" \
+    " \"on server https://allocations-api.access-ci.org/acdb/\"\n" \
+                      "\n<Replace " \
                       "this with the HASH you are using>\n".format(config["conf_file"], config["api_id"])
             sys.stderr.write(message)
         else:
             sys.stderr.write(
-                "accessusage is not authorized to query the XDCDB-API.\nPlease contact your system administrator.\n")
+                "accessusage is not authorized to query the ACCESS-CI Allocations API.\nPlease contact your system administrator.\n")
 
         # Show full error message in case it is something other than authorization.
         if resp is not None:
@@ -530,19 +533,26 @@ def setup_conf(config_filename):
         print("Could not open/write file, {}".format(local_conf_file))
         sys.exit()
 
-    os.write(con_fd, str.encode("# Select an XDCDB ResourceName from "
-                                "https://info.xsede.org/wh1/warehouse-views/v1/resources-xdcdb-active/?format=html"
+    os.write(con_fd, str.encode("# Select an Access-CI ResourceName from "
+                                "https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html"
                                 ";sort=ResourceID\n"))
-    os.write(con_fd, str.encode("# They are stored as \"ResourceID\" on the output from that page.\n"))
+    os.write(con_fd, str.encode("# They are stored as \"Info ResourceID\" on the output from that page.\n"))
     os.write(con_fd, str.encode("# This is the resource that usage will be reported on by default.\n"))
-    os.write(con_fd, str.encode("resource_name     = <YOUR_XDCDB_RESOURCE_NAME>\n\n"))
+    os.write(con_fd, str.encode("resource_name     = <YOUR_CIDER_RESOURCE_NAME>\n\n"))
     os.write(con_fd, str.encode("api_id            = {}\n\n".format(hostname)))
     os.write(con_fd, str.encode("# Instructions for generating the API key and hash and for getting the has "
                                 "configured in the API are at:\n"))
-    os.write(con_fd, str.encode("#     https://xsede-xdcdb-api.xsede.org/\n"))
-    os.write(con_fd, str.encode("# Click on the \"Generate API-KEY\" link and follow the instructions.\n"))
+    os.write(con_fd, str.encode("#     https://allocations-api.access-ci.org/acdb/\n"))
+    os.write(con_fd, str.encode("# Click on the \"Generate APIKEY\" link and complete the following steps:\n"))
+    os.write(con_fd, str.encode("# Open an operations request ticket at: https://operations.access-ci.org/open-operations-request/.  You will have to login first.\n"))
+    os.write(con_fd, str.encode("# In the \"Request Title\" enter \"Allocations API-KEY installation request\"\n"))
+    os.write(con_fd, str.encode("# In the \"Description\" enter:\n"))
+    os.write(con_fd, str.encode("# \"Please install the following HASH for agent xdusage on resource <ACCESS INFO RESOURCEID>\"\n"))
+    os.write(con_fd, str.encode("# <YOUR HASH>\n"))
+    os.write(con_fd, str.encode("# \"on server https://allocations-api.access-ci.org/acdb/\"\n"))
+
     os.write(con_fd, str.encode("api_key           = <YOUR_API_KEY>\n\n"))
-    os.write(con_fd, str.encode("rest_url_base     = https://xsede-xdcdb-api.xsede.org/\n\n"))
+    os.write(con_fd, str.encode("rest_url_base     = https://allocations-api.access-ci.org/\n\n"))
     os.write(con_fd, str.encode("# List the login name of admins who can impersonate other users; one per line.\n"))
     os.write(con_fd, str.encode("# admin_name = fabio\n"))
     try:
