@@ -67,7 +67,6 @@ cp -p etc/accessusage.sudoers.example ${DESTDIR}/etc/
 %attr(0755, root   , root   ) /usr/local/accessusage-%VER%-%REL%/docs/*
 %attr(0755, root   , root   ) /usr/local/accessusage-%VER%-%REL%/man/man1/*
 %attr(0640, root   , accessusage) /usr/local/accessusage-%VER%-%REL%/etc/accessusage_v2.conf.example
-%attr(0640, root   , accessusage) /usr/local/accessusage-%VER%-%REL%/etc/accessusage_v2.conf.example
 %attr(0644, root   , root   ) /usr/local/accessusage-%VER%-%REL%/etc/accessusage.modules.example
 %attr(0644, root   , root   ) /usr/local/accessusage-%VER%-%REL%/etc/accessusage.sudoers.example
 

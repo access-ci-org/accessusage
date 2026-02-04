@@ -52,7 +52,7 @@ R3) Create an accessusage_v2.conf (new ACDB database) file.
 
            A resource_name and api_id also needs to be configured in the accessusage_v2.conf file. The resource_name is used by 
            accessusage to map usernames to people in the ACDB. The api_id (along with the api_key) are used to authenticate 
-           accessusage to the API. Both of these values should be the same and must match the XDCDB Resource Name as listed at:
+           accessusage to the API. Both of these values should be the same and must match the ACDB Resource Name as listed at:
             
            https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid
     
