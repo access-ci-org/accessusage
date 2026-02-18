@@ -31,7 +31,7 @@ mkdir $TARPATH/sbin
 cp -p VERSION RELEASE $TARPATH/
 
 FILES=$(find bin etc docs man -type f ! -path \*\.svn\*)
-FILES="$FILES sbin/$PKG.spec.in sbin/build-rpms README.md LICENSE.txt NOTICE"
+FILES="$FILES sbin/$PKG.spec.in sbin/build-rpms LICENSE.txt NOTICE"
 for i in $FILES;do
   iout=$(echo $i | sed 's/\.in$//')
   sed -e "s,%VER%,$VER,g" \
@@ -39,6 +39,7 @@ for i in $FILES;do
       $i \
       >$TARPATH/$iout
 done
+cp $TARPATH/docs/README.md ./
 #(cd $TARPATH; ln -s docs/GETTING_STARTED.md)
 #man $TARPATH/docs/$PKG.1 >$TARPATH/docs/$PKG.manpage
 chmod +x $TARPATH/sbin/build-rpms

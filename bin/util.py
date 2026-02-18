@@ -28,7 +28,7 @@ def check_resource(options, config, resources_func):
             sys.stderr.write(
                 "Information may not exist in the ACCESS-CI central accounting database for this resource.\n\n")
             sys.stderr.write("Current ACCESS-CI CiDeR resources are listed at:\n")
-            sys.stderr.write("https://opsapi1.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
+            sys.stderr.write("https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
         else:
             sys.stderr.write("The resource_name '{}' specified in the configuration file is not listed as a current "
                              "ACCESS-CI system.\n".format(local_resource))
@@ -36,7 +36,7 @@ def check_resource(options, config, resources_func):
             sys.stderr.write("Please contact your system administrator.\n\n")
             sys.stderr.write("You can specify a different resource with the \"-r\" option.\n\n")
             sys.stderr.write("Current ACCESS-CI resources are listed at:\n")
-            sys.stderr.write("https://opsapi1.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
+            sys.stderr.write("https://operations-api.access-ci.org/wh2/cider/v1/access-active/?format=html&sort=info_resourceid")
 
 
 
