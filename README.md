@@ -1,5 +1,5 @@
 **********************************************
-** accessusage-%VER%-%REL% Install Instructions
+** accessusage-0.4-1 Install Instructions
 **********************************************
 
 Instructions for installing accessusage from RPM (recommended) or from TAR.
@@ -15,10 +15,10 @@ R1) Install the desired RPM release from [https://github.com/access-ci-org/acces
    NOTE: This package automatically creates an "accessusage" account that owns the files and will
          execute accessusage via sudo.
 
-The RPM installs files by default under “/usr/local/accessusage-%VER%-%REL%”
-   # rpm -i ./accessusage-%VER%-%REL%-1.noarch.rpm
+The RPM installs files by default under “/usr/local/accessusage-0.4-1”
+   # rpm -i ./accessusage-0.4-1-1.noarch.rpm
 To install under a different prefix, use
-   # rpm -i --prefix=<INSTALL_DIR> ./accessusage-%VER%-%REL%-1.noarch.rpm
+   # rpm -i --prefix=<INSTALL_DIR> ./accessusage-0.4-1-1.noarch.rpm
 
 
 R2) Edit /etc/sudoers to grant permission for everyone to run accessusage as the non_root user "accessusage" (created when the rpm was installed).
@@ -64,8 +64,8 @@ R3) Create an accessusage_v2.conf (new ACDB database) file.
              admin_name        = mshapiro
 
 R4) Install an accessusage modules file to make it easier for users to access it. Copy the sample file in
-    <INSTALL_DIR>/etc/accessusage.modules.example to /usr/local/Modules/modulefiles/accessusage/%VER%-%REL%
-    (or a Module directory of your choosing) and mark the default by specifying %VER%-%REL% in the
+    <INSTALL_DIR>/etc/accessusage.modules.example to /usr/local/Modules/modulefiles/accessusage/0.4-1
+    (or a Module directory of your choosing) and mark the default by specifying 0.4-1 in the
     associated /usr/local/Modules/modulefiles/accessusage/.version file.
 
 R5) Change to <INSTALL_DIR> and run:
@@ -103,9 +103,9 @@ Installation steps:
 T1) Download the desired TAR release from [https://github.com/access-ci-org/accessusage/releases](https://github.com/access-ci-org/accessusage/releases).
 
 T2) Untar the package:
-    tar -xzvf accessusage-%VER%-%REL%.tgz
+    tar -xzvf accessusage-0.4-1.tgz
 
-T3) Copy accessusage-%VER%-%REL%/bin/accessusage to a directory of your choosing, <INSTALL_DIR>.
+T3) Copy accessusage-0.4-1/bin/accessusage to a directory of your choosing, <INSTALL_DIR>.
     The accessusage file should have permissions 0555, owned by root:root, so that it is not
     inadvertently changed.  DO NOT make this file owned by the accessusage user described below.
 
