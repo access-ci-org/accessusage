@@ -1,0 +1,14 @@
+docker run -it redhat/ubi8
+
+    2  yum install git
+   45  yum install rpm-build
+    4  git clone https://github.com/access-ci-org/accessusage.git
+    5  cd accessusage/
+   11   ./sbin/build-packages 
+
+in a different window
+docker cp 7cb0b9dcefc3:/accessusage/tmp_packages/accessusage-0.4-1.src.rpm ./
+docker cp 7cb0b9dcefc3:/accessusage/tmp_packages/accessusage-0.4-1.noarch.rpm ./
+docker cp 7cb0b9dcefc3:/accessusage/tmp_build/accessusage-0.4-1.tgz ./
+
+note: docker hash probably different
