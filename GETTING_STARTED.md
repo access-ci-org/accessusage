@@ -54,14 +54,3 @@ $ ./bin/accessusage -r expanse
 $ ./bin/accessusage -s 2021-06-28 -e 2021-10-01
 $ ./bin/accessusage -r expanse -ip
 ```
-
-### 8. Test accessusage version 1
-```
-$ ./bin/accessusage -av 1 -h
-$ ./bin/accessusage -av 1
-$ ./bin/accessusage -av 1 -p TG-MCB190139
-$ ./bin/accessusage -av 1 -up cyoun
-$ ./bin/accessusage -av 1 -r expanse
-$ ./bin/accessusage -av 1 -s 2021-06-28 -e 2021-10-01
-$ ./bin/accessusage -av 1 -r expanse -ip
-```
