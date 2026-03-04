@@ -44,7 +44,7 @@ $ sudo chmod 750 ./etc
 $ sudo chmod 640 -R ./etc/*.conf
 ```
 
-### 7. Test accessusage version 2
+### 7. Test accessusage
 ```
 $ ./bin/accessusage -h
 $ ./bin/accessusage
